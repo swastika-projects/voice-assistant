@@ -22,7 +22,7 @@ def talk(text):
 def getUsername():
     try:
         with sr.Microphone() as source:
-            talk('Hello! I am bhosdu. What do i call you?')
+            talk('Hello! I am bob. What do i call you?')
             uname = listener.listen(source)
             user_name = listener.recognize_google(uname)
             user_name = user_name.lower()
