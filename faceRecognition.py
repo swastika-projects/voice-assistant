@@ -8,8 +8,6 @@ def face_rec():
     dhruv_image = face_recognition.load_image_file('dhruv-test.jpeg')
     dhruv_face_encoding = face_recognition.face_encodings(dhruv_image)[0]
 
-    atul_image = face_recognition.load_image_file('atul-test.jpeg')
-    atul_face_encoding = face_recognition.face_encodings(atul_image)[0]
 
     swastika_image = face_recognition.load_image_file('swastika-test.jpeg')
     swastika_face_encoding = face_recognition.face_encodings(swastika_image)[0]
