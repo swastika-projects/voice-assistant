@@ -5,11 +5,8 @@ import datetime
 import wikipedia
 import pyjokes
 import webbrowser
+import wolframalpha
 import faceRecognition
-import random
-import operator
-import requests
-from urllib.request import urlopen
 
 listener = sr.Recognizer()
 engine = pyttsx3.init()
@@ -21,10 +18,11 @@ def talk(text):
     engine.say(text)
     engine.runAndWait()
 
+
 def getUsername():
     try:
         with sr.Microphone() as source:
-            talk('Hello! I am Bob What do i call you?')
+            talk('Hello! I am bhosdu. What do i call you?')
             uname = listener.listen(source)
             user_name = listener.recognize_google(uname)
             user_name = user_name.lower()
@@ -32,13 +30,13 @@ def getUsername():
         pass
     return user_name
 
+
 def take_command():
     try:
         with sr.Microphone() as source:
             username = getUsername()
             talk('Hello' + username)
             print('hello ' + username)
-            #talk(username)
             talk('Call my name before speaking to let me know you are talking to me')
             talk('How may i assist you?')
             print('listening...')
@@ -54,7 +52,6 @@ def take_command():
                 command = command.lower()
             if 'bob' in command:
                 command = command.replace('bob', '')
-                print(command)
     except:
         pass
     return command
@@ -67,21 +64,38 @@ def run_bob():
         song = command.replace('play', '')
         talk('playing ' + song)
         pywhatkit.playonyt(song)
+
+    elif "calculate" in command.lower():
+        app_id = "AX233G-8UQVX7WEA4"
+        client = wolframalpha.Client(app_id)
+        indx = command.lower().split().index('calculate')
+        query = command.split()[indx + 1:]
+        res = client.query(' '.join(query))
+        answer = next(res.results).text
+        print("Answer is : " + answer)
+        talk("The answer is " + answer)
+
     elif 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p')
         talk('Current time is ' + time)
+
     elif 'date' in command:
         talk('sorry, I have a headache')
+
     elif 'are you single' in command:
         talk('I am in a relationship with wifi')
+
     elif 'joke' in command:
         talk(pyjokes.get_joke())
+
     elif 'order' in command:
-        order = command.replace('order','')
+        order = command.replace('order', '')
         talk('Redirecting you to Amazon website.')
         webbrowser.open_new_tab(order)
+
     elif 'detect' or 'recognise' in command:
         faceRecognition.face_rec()
+
     elif 'what' or 'who' or 'where' or 'how' or 'when' in command:
         person = command.replace('what' or 'who' or 'where' or 'how' or 'when', '')
         info = wikipedia.summary(person, 1)
